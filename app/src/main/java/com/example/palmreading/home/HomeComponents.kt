@@ -1,4 +1,4 @@
-package com.example.palmreading
+package com.example.palmreading.home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -31,42 +30,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.palmreading.ui.theme.PalmReadingTheme
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.palmreading.R
 import com.example.palmreading.ui.theme.boldFont
 import com.example.palmreading.ui.theme.mediumFont
 import com.example.palmreading.ui.theme.sunshineFont
-
-
-@Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
-    GradientBackgroundWithImage {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 60.pxToDp(), start = 24.pxToDp(), end = 24.pxToDp()),
-            verticalArrangement = Arrangement.spacedBy(24.pxToDp()),
-        ) {
-            HomeHeader(
-                modifier = Modifier
-                    .width(380.pxToDp())
-                    .height(80.pxToDp())
-            )
-
-            Column(
-                verticalArrangement = Arrangement.spacedBy(24.pxToDp())
-            ) {
-                palmReadingItems.forEach { item ->
-                    HomeCard(
-                        item, modifier = Modifier
-                            .width(382.pxToDp())
-                            .height(156.pxToDp())
-                    )
-                }
-            }
-        }
-    }
-}
 
 
 @Composable
@@ -74,12 +43,11 @@ fun GradientBackgroundWithImage(content: @Composable () -> Unit) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-
         Image(
             painter = painterResource(R.drawable.img_home_background),
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.matchParentSize() // Phủ đúng kích thước Column
+            modifier = Modifier.matchParentSize()
         )
         Column(
             modifier = Modifier
@@ -98,74 +66,77 @@ fun GradientBackgroundWithImage(content: @Composable () -> Unit) {
     }
 }
 
-
+// Header with logo and settings button.
 @Composable
-fun HomeHeader(modifier: Modifier = Modifier, text: String = "Palm Reading App") {
+fun HomeHeader(
+    modifier: Modifier = Modifier,
+    onSettingClick: () -> Unit,
+    text: String
+) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(16.pxToDp())
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Image(
             painter = painterResource(R.drawable.ic_home_logo),
             contentDescription = null,
             contentScale = ContentScale.FillHeight,
-            modifier = Modifier
-                .fillMaxHeight()
+            modifier = Modifier.fillMaxHeight()
         )
         Text(
             text = text,
-            fontSize = 32f.pxToSp(),
+            fontSize = 32.sp,
             fontFamily = sunshineFont,
             color = Color(0xFFFFC457),
-            modifier = Modifier
-                .weight(1f)
+            modifier = Modifier.weight(1f)
         )
-
-        SettingButton { /*TODO*/ }
-
+        SettingButton(onSettingClick = onSettingClick)
     }
 }
 
-
+// Settings button.
 @Composable
 fun SettingButton(onSettingClick: () -> Unit) {
-    IconButton(onSettingClick) {
+    IconButton(onClick = onSettingClick) {
         Image(
             painter = painterResource(R.drawable.ic_home_setting),
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(24.pxToDp())
+            modifier = Modifier.size(24.dp)
         )
     }
 }
 
-
+// Card item composable with click callback.
 @Composable
-fun HomeCard(item: HomeCardItem, modifier: Modifier = Modifier) {
+fun HomeCardItem(
+    item: HomeCardItemModel,
+    onItemClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Card(
-        shape = RoundedCornerShape(24.pxToDp()),
-        border = BorderStroke(width = 2.pxToDp(), Color(0xFFA17B58)),
+        shape = RoundedCornerShape(24.dp),
+        border = BorderStroke(2.dp, Color(0xFFA17B58)),
         colors = CardDefaults.cardColors(containerColor = Color(0xFF4A0A82).copy(alpha = 0.8f)),
         modifier = modifier
             .fillMaxSize()
             .shadow(
-                elevation = 20.pxToDp(),
-                shape = RoundedCornerShape(24.pxToDp()),
+                elevation = 20.dp,
+                shape = RoundedCornerShape(24.dp),
                 spotColor = Color(0xFFF17D12)
             )
-            .clickable { item.onCardClick() }
+            .clickable { onItemClick() }
     ) {
-        CardContent(item)
+        CardContent(item = item)
     }
 }
 
-
+// Content inside the card: image and texts.
 @Composable
-fun CardContent(item: HomeCardItem, modifier: Modifier = Modifier){
+fun CardContent(item: HomeCardItemModel, modifier: Modifier = Modifier) {
     Row(
-        modifier = Modifier.padding(16.pxToDp()),
+        modifier = modifier.padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
@@ -173,16 +144,16 @@ fun CardContent(item: HomeCardItem, modifier: Modifier = Modifier){
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .size(120.pxToDp())
-                .clip(RoundedCornerShape(16.pxToDp()))
+                .size(120.dp)
+                .clip(RoundedCornerShape(16.dp))
         )
-        Spacer(modifier = Modifier.width(12.pxToDp()))
+        Spacer(modifier = Modifier.width(12.dp))
         Column(
             modifier = Modifier.weight(1f)
         ) {
             Text(
                 text = item.title,
-                fontSize = 18f.pxToSp(),
+                fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = boldFont,
                 overflow = TextOverflow.Ellipsis,
@@ -190,47 +161,11 @@ fun CardContent(item: HomeCardItem, modifier: Modifier = Modifier){
             )
             Text(
                 text = item.description,
-                fontSize = 12f.pxToSp(),
+                fontSize = 12.sp,
                 fontFamily = mediumFont,
                 overflow = TextOverflow.Ellipsis,
                 color = Color(0xFF848890)
             )
         }
-    }
-}
-
-data class HomeCardItem(
-    val title: String,
-    val description: String,
-    val imageResId: Int,
-    val onCardClick: () -> Unit
-)
-
-val palmReadingItems = listOf(
-    HomeCardItem(
-        title = "General Palm Reading",
-        description = "Discover the entire palm line now!",
-        imageResId = R.drawable.ic_home_general,
-        onCardClick = {}
-    ),
-    HomeCardItem(
-        title = "Daily Palm Insights",
-        description = "Daily predictions from your palm!",
-        imageResId = R.drawable.ic_home_daily,
-        onCardClick = {}
-    ),
-    HomeCardItem(
-        title = "Love & Relationship Scan",
-        description = "Palm lines can reveal the level of compatibility between you and that person.",
-        imageResId = R.drawable.ic_home_love,
-        onCardClick = {}
-    )
-)
-
-@Preview(showBackground = true, widthDp = 430)
-@Composable
-fun HomeShow() {
-    PalmReadingTheme {
-        HomeScreen(modifier = Modifier.fillMaxSize())
     }
 }
