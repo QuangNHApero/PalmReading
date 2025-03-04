@@ -1,7 +1,6 @@
-package com.example.palmreading.ui.components
+package com.example.palmreading.components
 
 import android.graphics.BlurMaskFilter
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -35,14 +34,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
 import com.example.palmreading.R
-import com.example.palmreading.base.CardItemModel
+import com.example.palmreading.base.BaseCardItemModel
 import com.example.palmreading.pxToDp
 import com.example.palmreading.ui.theme.boldFont
 import com.example.palmreading.ui.theme.mediumFont
 
 @Composable
 fun CardContent(
-    item: CardItemModel,
+    item: BaseCardItemModel,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -84,10 +83,10 @@ fun CardContent(
 
 @Composable
 fun BaseCardItem(
-    item: CardItemModel,
+    item: BaseCardItemModel,
     onItemClick: () -> Unit,
     modifier: Modifier = Modifier,
-    isHistoryScreen: Boolean = true,
+    isHistoryScreen: Boolean = false,
     onCloseClick: (() -> Unit)? = null,
     onSeeMoreClick: (() -> Unit)? = null
 ) {
