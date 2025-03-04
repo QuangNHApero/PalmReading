@@ -11,17 +11,17 @@ class HistoryViewModel : ViewModel() {
         HistoryUIState(
             items = listOf(
                 HistoryModel(
-                    name = "General Palm Reading",
+                    title = "General Palm Reading",
                     description = "Discover the entire palm line now!",
                     imageResId = R.drawable.ic_home_general
                 ),
                 HistoryModel(
-                    name = "Daily Palm Insights",
+                    title = "Daily Palm Insights",
                     description = "Daily predictions from your palm!",
                     imageResId = R.drawable.ic_home_daily
                 ),
                 HistoryModel(
-                    name = "Love & Relationship Scan",
+                    title = "Love & Relationship Scan",
                     description = "Palm lines can reveal the level of compatibility between you and that person.",
                     imageResId = R.drawable.ic_home_love
                 )

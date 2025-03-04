@@ -29,6 +29,7 @@ import com.example.palmreading.home.HomeCardItem
 import com.example.palmreading.home.HomeCardItemModel
 import com.example.palmreading.home.HomeViewModel
 import com.example.palmreading.pxToDp
+import com.example.palmreading.ui.components.BaseCardItem
 
 @Composable
 fun HistoryScreen(
@@ -117,18 +118,21 @@ fun HistoryContent(
             )
 
             items.forEach { item ->
-                HomeCardItem(
+                BaseCardItem(
                     item = item,
                     onItemClick = { onItemClick(item) },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(156.pxToDp())
+                        .height(156.pxToDp()),
+                    isHistoryScreen = true,
+                    onCloseClick = {  },
+                    onSeeMoreClick = {  }
                 )
             }
+
         }
     }
 }
-
 
 @SuppressLint("ViewModelConstructorInComposable")
 @Preview
