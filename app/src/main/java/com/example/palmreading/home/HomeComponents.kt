@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -25,7 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
@@ -35,9 +35,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import com.example.palmreading.ui.theme.PalmReadingTheme
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.palmreading.R
@@ -45,8 +43,6 @@ import com.example.palmreading.pxToDp
 import com.example.palmreading.ui.theme.boldFont
 import com.example.palmreading.ui.theme.mediumFont
 import com.example.palmreading.ui.theme.sunshineFont
-import kotlin.math.round
-
 
 @Composable
 fun GradientBackgroundWithImage(content: @Composable () -> Unit) {
@@ -86,7 +82,7 @@ fun HomeHeader(
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalArrangement = Arrangement.spacedBy(16.pxToDp())
     ) {
         Image(
             painter = painterResource(R.drawable.ic_home_logo),
@@ -118,19 +114,63 @@ fun SettingButton(onSettingClick: () -> Unit) {
     }
 }
 
-// Card item composable with click callback.
+@Composable
+
+fun CardContent(
+    item: HomeCardItemModel,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            painter = painterResource(item.imageResId),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(100.pxToDp())
+                .clip(RoundedCornerShape(16.pxToDp()))
+        )
+        Spacer(modifier = Modifier.width(12.pxToDp()))
+        Column(
+            modifier = Modifier.weight(1f)
+        ) {
+            Text(
+                text = item.title,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = boldFont,
+                overflow = TextOverflow.Ellipsis,
+                color = Color.White
+            )
+            Text(
+                text = item.description,
+                fontSize = 12.sp,
+                fontFamily = mediumFont,
+                overflow = TextOverflow.Ellipsis,
+                color = Color(0xFF848890),
+                maxLines = 3
+            )
+        }
+    }
+}
+
 @Composable
 fun HomeCardItem(
     item: HomeCardItemModel,
     onItemClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isHistoryScreen: Boolean = true,
+    onCloseClick: (() -> Unit)? = null,
+    onSeeMoreClick: (() -> Unit)? = null
 ) {
     Card(
-        shape = RoundedCornerShape(24.dp),
-        border = BorderStroke(2.dp, Color(0xFFA17B58)),
+        shape = RoundedCornerShape(24.pxToDp()),
+        border = BorderStroke(2.pxToDp(), Color(0xFFA17B58)),
         colors = CardDefaults.cardColors(containerColor = Color(0xFF4A0A82).copy(alpha = 0.8f)),
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .customShadow(
                 color = Color(0xFFF17D12).copy(alpha = 0.5f),
                 offsetX = 2.pxToDp(),
@@ -140,11 +180,49 @@ fun HomeCardItem(
             )
             .clickable { onItemClick() }
     ) {
-        CardContent(item = item)
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.pxToDp())
+        ) {
+
+            CardContent(
+                item = item,
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .fillMaxWidth()
+            )
+
+            // If its in the history screen, add a close and see more button
+            if (isHistoryScreen) {
+                IconButton(
+                    onClick = { onCloseClick?.invoke() },
+                    modifier = Modifier
+                        .size(24.pxToDp())
+                        .align(Alignment.TopEnd)
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_close),
+                        modifier = Modifier.size(24.pxToDp()),
+                        contentDescription = null
+                    )
+                }
+
+                Text(
+                    text = "See More →",
+                    color = Color.White,
+                    fontSize = 14.sp,
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .clickable { onSeeMoreClick?.invoke() }
+                        .padding(top = 8.pxToDp())
+                )
+            }
+
+        }
     }
 }
-
-// Content inside the card: image and texts.
 
 fun Modifier.customShadow(
     color: Color = Color(0x1A000000),
@@ -177,43 +255,5 @@ fun Modifier.customShadow(
             radiusY = roundedRadius.toPx(),
             paint = paint
         )
-    }
-}
-
-
-@Composable
-fun CardContent(item: HomeCardItemModel, modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier.padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Image(
-            painter = painterResource(item.imageResId),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(120.dp)
-                .clip(RoundedCornerShape(16.dp))
-        )
-        Spacer(modifier = Modifier.width(12.dp))
-        Column(
-            modifier = Modifier.weight(1f)
-        ) {
-            Text(
-                text = item.title,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = boldFont,
-                overflow = TextOverflow.Ellipsis,
-                color = Color.White
-            )
-            Text(
-                text = item.description,
-                fontSize = 12.sp,
-                fontFamily = mediumFont,
-                overflow = TextOverflow.Ellipsis,
-                color = Color(0xFF848890)
-            )
-        }
     }
 }
