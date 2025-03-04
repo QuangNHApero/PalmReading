@@ -1,9 +1,10 @@
 package com.example.palmreading.history
 
 import androidx.annotation.DrawableRes
+import com.example.palmreading.base.CardItemModel
 
 data class HistoryModel(
-    val name: String,
-    val description: String,
-    @DrawableRes val imageResId: Int
-)
+    override val title: String,
+    override val description: String,
+    @DrawableRes override val imageResId: Int
+) : CardItemModel
