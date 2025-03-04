@@ -141,6 +141,7 @@ fun CardContent(
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = boldFont,
+                maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 color = Color.White
             )
