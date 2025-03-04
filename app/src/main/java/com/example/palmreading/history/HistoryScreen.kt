@@ -25,20 +25,17 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.palmreading.R
 import com.example.palmreading.home.GradientBackgroundWithImage
-import com.example.palmreading.home.HomeCardItem
-import com.example.palmreading.home.HomeCardItemModel
-import com.example.palmreading.home.HomeViewModel
 import com.example.palmreading.pxToDp
 import com.example.palmreading.ui.components.BaseCardItem
 
 @Composable
 fun HistoryScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = viewModel(),
+    viewModel: HistoryViewModel = viewModel(),
     onBackClick: () -> Unit,
     onCameraClick: () -> Unit,
     onUploadClick: () -> Unit,
-    onItemClick: (HomeCardItemModel) -> Unit,
+    onItemClick: (HistoryModel) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -55,8 +52,8 @@ fun HistoryScreen(
 @Composable
 fun HistoryContent(
     modifier: Modifier = Modifier,
-    items: List<HomeCardItemModel>,
-    onItemClick: (HomeCardItemModel) -> Unit,
+    items: List<HistoryModel>,
+    onItemClick: (HistoryModel) -> Unit,
     onBackClick: () -> Unit,
     onCameraClick: () -> Unit,
     onUploadClick: () -> Unit
@@ -138,5 +135,5 @@ fun HistoryContent(
 @Preview
 @Composable
 private fun AA() {
-    HistoryScreen(modifier = Modifier, HomeViewModel(), {}, {}, {}, {})
+    HistoryScreen(modifier = Modifier, HistoryViewModel(), {}, {}, {}, {})
 }

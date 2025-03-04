@@ -7,4 +7,4 @@ data class HistoryModel(
     override val title: String,
     override val description: String,
     @DrawableRes override val imageResId: Int
-) : CardItemModel
+) : CardItemModel()
