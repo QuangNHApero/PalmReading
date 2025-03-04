@@ -1,15 +1,11 @@
 package com.example.palmreading.setting
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.HorizontalDivider
@@ -22,31 +18,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.palmreading.R
 import com.example.palmreading.pxToDp
 import com.example.palmreading.pxToSp
-import com.example.palmreading.ui.theme.PalmReadingTheme
 import com.example.palmreading.ui.theme.boldFont
-
-
-@Composable
-fun SettingScreen(){
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFF13111F))
-            .padding(top = 45.pxToDp(), start = 24.pxToDp(), end = 24.pxToDp()),
-        verticalArrangement = Arrangement.spacedBy(24.pxToDp())
-
-    ) {
-        TopSettingAppBar {  }
-
-        settings.forEach { category ->
-            SettingCategoryCompose(category)
-        }
-    }
-}
 
 @Composable
 fun TopSettingAppBar(onBackClick: () ->Unit){
@@ -81,7 +56,7 @@ fun SettingCategoryCompose(settingCategory: SettingCategory){
         Row(
             verticalAlignment = Alignment.CenterVertically,
 
-        ) {
+            ) {
             Text(
                 text = settingCategory.title,
                 fontFamily = boldFont,
@@ -128,43 +103,5 @@ fun SettingsItem(item: SettingItem){
             contentScale = ContentScale.Crop,
             modifier = Modifier.size(18.pxToDp())
         )
-    }
-}
-
-data class SettingCategory(
-    val title: String,
-    val items: List<SettingItem>
-)
-
-data class SettingItem(
-    val icon: Int, // Resource ID cho icon
-    val name: String,
-    val value: String? = null, // Giá trị (ví dụ: "English")
-    val navigator: ()->Unit
-)
-
-// Ví dụ dữ liệu
-val settings = listOf(
-    SettingCategory(
-        title = "General",
-        items = listOf(
-            SettingItem(icon = R.drawable.ic_language, name = "Language", value = "English", {})
-        )
-    ),
-    SettingCategory(
-        title = "About",
-        items = listOf(
-            SettingItem(icon = R.drawable.ic_privacy, name = "Privacy Policy", value = null, {}),
-            SettingItem(icon = R.drawable.ic_terms, name = "Terms of Service", value = null, {})
-        )
-    )
-)
-
-
-@Preview(showBackground = true, widthDp = 430, heightDp = 900)
-@Composable
-fun SettingShow() {
-    PalmReadingTheme {
-        SettingScreen()
     }
 }
