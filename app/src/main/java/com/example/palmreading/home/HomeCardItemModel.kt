@@ -1,10 +1,9 @@
-package com.example.palmreading
+package com.example.palmreading.home
 
 import androidx.annotation.DrawableRes
 
 data class HomeCardItemModel(
     val title: String,
     val description: String,
-    @DrawableRes val imageResId: Int,
-    val onCardClick: () -> Unit
+    @DrawableRes val imageResId: Int
 )

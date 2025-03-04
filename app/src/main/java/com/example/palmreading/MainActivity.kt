@@ -4,8 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.ui.Modifier
+import com.example.palmreading.home.HomeScreen
 
 
 import com.example.palmreading.ui.theme.PalmReadingTheme
@@ -16,7 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PalmReadingTheme {
-                HomeScreen(modifier = Modifier.fillMaxSize())
+                HomeScreen(onItemClick = {}, onSettingClick = {})
             }
         }
     }
