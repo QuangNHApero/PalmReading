@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.example.palmreading.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class HomeViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(
@@ -27,5 +28,5 @@ class HomeViewModel : ViewModel() {
             )
         )
     )
-    val uiState: StateFlow<HomeUIState> = _uiState
+    val uiState: StateFlow<HomeUIState> = _uiState.asStateFlow()
 }
