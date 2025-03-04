@@ -94,3 +94,9 @@ fun HomeScreenPreview() {
         )
     }
 }
+
+@Preview
+@Composable
+private fun BB() {
+    HomeScreen(onSettingClick = {}, onItemClick = {})
+}
