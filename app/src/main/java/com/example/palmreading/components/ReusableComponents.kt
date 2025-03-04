@@ -145,6 +145,19 @@ fun BaseCardItem(
     }
 }
 
+@Composable
+fun BackButton(
+    onBackClick: () -> Unit,
+) {
+    Image(
+        painter = painterResource(R.drawable.ic_back),
+        contentDescription = "Back",
+        modifier = Modifier
+            .size(32.pxToDp())
+            .clickable { onBackClick() }
+    )
+}
+
 fun Modifier.customShadow(
     color: Color = Color(0x1A000000),
     offsetX: Dp = 5.pxToDp(),

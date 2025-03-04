@@ -25,7 +25,7 @@ import com.example.palmreading.pxToDp
 import com.example.palmreading.ui.theme.sunshineFont
 
 @Composable
-fun GradientBackgroundWithImage(content: @Composable () -> Unit) {
+fun  GradientBackgroundWithImage(content: @Composable () -> Unit) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
