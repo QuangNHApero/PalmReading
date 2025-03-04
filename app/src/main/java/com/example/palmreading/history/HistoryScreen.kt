@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.palmreading.R
+import com.example.palmreading.components.BackButton
 import com.example.palmreading.home.GradientBackgroundWithImage
 import com.example.palmreading.pxToDp
 import com.example.palmreading.components.BaseCardItem
@@ -69,13 +70,7 @@ fun HistoryContent(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(R.drawable.ic_back),
-                    contentDescription = "Back",
-                    modifier = Modifier
-                        .size(32.pxToDp())
-                        .clickable { onBackClick() }
-                )
+                BackButton(onBackClick)
             }
 
             Row(
