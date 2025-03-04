@@ -14,7 +14,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.palmreading.R
 import com.example.palmreading.pxToDp
-import com.example.palmreading.ui.components.BaseCardItem
+import com.example.palmreading.components.BaseCardItem
 import com.example.palmreading.ui.theme.PalmReadingTheme
 
 @Composable
@@ -58,6 +58,7 @@ fun HomeContent(
             items.forEach { item ->
                 BaseCardItem(
                     item = item,
+                    isHistoryScreen = false,
                     onItemClick = { onItemClick(item) },
                     modifier = Modifier
                         .fillMaxWidth()

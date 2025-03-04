@@ -26,7 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.palmreading.R
 import com.example.palmreading.home.GradientBackgroundWithImage
 import com.example.palmreading.pxToDp
-import com.example.palmreading.ui.components.BaseCardItem
+import com.example.palmreading.components.BaseCardItem
 
 @Composable
 fun HistoryScreen(

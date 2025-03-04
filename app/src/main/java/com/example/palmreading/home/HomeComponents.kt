@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.palmreading.R
 import com.example.palmreading.pxToDp
-import com.example.palmreading.ui.components.BaseCardItem
 import com.example.palmreading.ui.theme.sunshineFont
 
 @Composable
