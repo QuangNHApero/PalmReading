@@ -41,6 +41,7 @@ import com.example.palmreading.ui.theme.PalmReadingTheme
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.palmreading.R
+import com.example.palmreading.pxToDp
 import com.example.palmreading.ui.theme.boldFont
 import com.example.palmreading.ui.theme.mediumFont
 import com.example.palmreading.ui.theme.sunshineFont
@@ -107,12 +108,12 @@ fun HomeHeader(
 // Settings button.
 @Composable
 fun SettingButton(onSettingClick: () -> Unit) {
-    IconButton(onClick = onSettingClick) {
+    IconButton(onClick = onSettingClick, modifier = Modifier.size(24.dp)) {
         Image(
             painter = painterResource(R.drawable.ic_home_setting),
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.fillMaxSize()
         )
     }
 }
