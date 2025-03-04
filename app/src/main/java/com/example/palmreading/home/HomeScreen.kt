@@ -10,10 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.palmreading.R
+import com.example.palmreading.pxToDp
 import com.example.palmreading.ui.theme.PalmReadingTheme
 
 @Composable
@@ -44,13 +44,13 @@ fun HomeContent(
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(top = 60.dp, start = 24.dp, end = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(24.dp)
+                .padding(top = 60.pxToDp(), start = 24.pxToDp(), end = 24.pxToDp()),
+            verticalArrangement = Arrangement.spacedBy(24.pxToDp())
         ) {
             HomeHeader(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(80.dp),
+                    .height(80.pxToDp()),
                 onSettingClick = onSettingClick,
                 text = "Palm Reading App"
             )
@@ -60,7 +60,7 @@ fun HomeContent(
                     onItemClick = { onItemClick(item) },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(156.dp)
+                        .height(156.pxToDp())
                 )
             }
         }
