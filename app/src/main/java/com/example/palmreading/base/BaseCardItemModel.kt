@@ -2,9 +2,9 @@ package com.example.palmreading.base
 
 import androidx.annotation.DrawableRes
 
-interface CardItemModel {
-    val title: String
-    val description: String
+abstract class CardItemModel {
+    abstract val title: String
+    abstract val description: String
     @get:DrawableRes
-    val imageResId: Int
+    abstract val imageResId: Int
 }

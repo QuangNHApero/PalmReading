@@ -94,7 +94,7 @@ fun SettingButton(onSettingClick: () -> Unit) {
         )
     }
 }
-
+/*
 @Composable
 fun HomeCardItem(
     item: HomeCardItemModel,
@@ -112,4 +112,4 @@ fun HomeCardItem(
         onCloseClick = onCloseClick,
         onSeeMoreClick = onSeeMoreClick
     )
-}
+}*/
