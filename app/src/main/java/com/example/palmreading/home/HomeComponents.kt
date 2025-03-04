@@ -1,5 +1,6 @@
 package com.example.palmreading.home
 
+import android.graphics.BlurMaskFilter
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,19 +24,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import com.example.palmreading.ui.theme.PalmReadingTheme
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.palmreading.R
+import com.example.palmreading.pxToDp
 import com.example.palmreading.ui.theme.boldFont
 import com.example.palmreading.ui.theme.mediumFont
 import com.example.palmreading.ui.theme.sunshineFont
+import kotlin.math.round
 
 
 @Composable
@@ -98,12 +108,12 @@ fun HomeHeader(
 // Settings button.
 @Composable
 fun SettingButton(onSettingClick: () -> Unit) {
-    IconButton(onClick = onSettingClick) {
+    IconButton(onClick = onSettingClick, modifier = Modifier.size(24.dp)) {
         Image(
             painter = painterResource(R.drawable.ic_home_setting),
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.fillMaxSize()
         )
     }
 }
@@ -121,10 +131,12 @@ fun HomeCardItem(
         colors = CardDefaults.cardColors(containerColor = Color(0xFF4A0A82).copy(alpha = 0.8f)),
         modifier = modifier
             .fillMaxSize()
-            .shadow(
-                elevation = 20.dp,
-                shape = RoundedCornerShape(24.dp),
-                spotColor = Color(0xFFF17D12)
+            .customShadow(
+                color = Color(0xFFF17D12).copy(alpha = 0.5f),
+                offsetX = 2.pxToDp(),
+                offsetY = 6.pxToDp(),
+                blurRadius = 8.pxToDp(),
+                roundedRadius = 24.pxToDp()
             )
             .clickable { onItemClick() }
     ) {
@@ -133,6 +145,42 @@ fun HomeCardItem(
 }
 
 // Content inside the card: image and texts.
+
+fun Modifier.customShadow(
+    color: Color = Color(0x1A000000),
+    offsetX: Dp = 5.pxToDp(),
+    offsetY: Dp = 4.pxToDp(),
+    blurRadius: Dp = 8.pxToDp(),
+    roundedRadius: Dp = 24.pxToDp()
+) = this.drawBehind {
+    drawIntoCanvas { canvas ->
+        val paint = Paint()
+        val frameworkPaint = paint.asFrameworkPaint()
+        val spreadPixel = blurRadius.toPx()
+        val leftPixel = offsetX.toPx()
+        val topPixel = offsetY.toPx()
+        val rightPixel = size.width + spreadPixel
+        val bottomPixel = size.height + spreadPixel
+
+        frameworkPaint.color = color.toArgb()
+        frameworkPaint.maskFilter = BlurMaskFilter(
+            blurRadius.toPx(),
+            BlurMaskFilter.Blur.NORMAL
+        )
+
+        canvas.drawRoundRect(
+            left = leftPixel,
+            top = topPixel,
+            right = rightPixel,
+            bottom = bottomPixel,
+            radiusX = roundedRadius.toPx(),
+            radiusY = roundedRadius.toPx(),
+            paint = paint
+        )
+    }
+}
+
+
 @Composable
 fun CardContent(item: HomeCardItemModel, modifier: Modifier = Modifier) {
     Row(
