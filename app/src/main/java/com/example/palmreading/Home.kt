@@ -39,7 +39,9 @@ import com.example.palmreading.ui.theme.sunshineFont
 
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(
+    modifier: Modifier = Modifier
+) {
     GradientBackgroundWithImage {
         Column(
             modifier = Modifier
@@ -53,17 +55,14 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     .height(80.pxToDp())
             )
 
-            Column(
-                verticalArrangement = Arrangement.spacedBy(24.pxToDp())
-            ) {
-                palmReadingItems.forEach { item ->
-                    HomeCard(
-                        item, modifier = Modifier
-                            .width(382.pxToDp())
-                            .height(156.pxToDp())
-                    )
-                }
+            palmReadingItems.forEach { item ->
+                HomeCardItem(
+                    item, modifier = Modifier
+                        .width(382.pxToDp())
+                        .height(156.pxToDp())
+                )
             }
+
         }
     }
 }
@@ -141,29 +140,8 @@ fun SettingButton(onSettingClick: () -> Unit) {
     }
 }
 
-
 @Composable
-fun HomeCard(item: HomeCardItem, modifier: Modifier = Modifier) {
-    Card(
-        shape = RoundedCornerShape(24.pxToDp()),
-        border = BorderStroke(width = 2.pxToDp(), Color(0xFFA17B58)),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF4A0A82).copy(alpha = 0.8f)),
-        modifier = modifier
-            .fillMaxSize()
-            .shadow(
-                elevation = 20.pxToDp(),
-                shape = RoundedCornerShape(24.pxToDp()),
-                spotColor = Color(0xFFF17D12)
-            )
-            .clickable { item.onCardClick() }
-    ) {
-        CardContent(item)
-    }
-}
-
-
-@Composable
-fun CardContent(item: HomeCardItem, modifier: Modifier = Modifier){
+fun CardContent(item: HomeCardItemModel, modifier: Modifier = Modifier) {
     Row(
         modifier = Modifier.padding(16.pxToDp()),
         verticalAlignment = Alignment.CenterVertically
@@ -199,27 +177,20 @@ fun CardContent(item: HomeCardItem, modifier: Modifier = Modifier){
     }
 }
 
-data class HomeCardItem(
-    val title: String,
-    val description: String,
-    val imageResId: Int,
-    val onCardClick: () -> Unit
-)
-
 val palmReadingItems = listOf(
-    HomeCardItem(
+    HomeCardItemModel(
         title = "General Palm Reading",
         description = "Discover the entire palm line now!",
         imageResId = R.drawable.ic_home_general,
         onCardClick = {}
     ),
-    HomeCardItem(
+    HomeCardItemModel(
         title = "Daily Palm Insights",
         description = "Daily predictions from your palm!",
         imageResId = R.drawable.ic_home_daily,
         onCardClick = {}
     ),
-    HomeCardItem(
+    HomeCardItemModel(
         title = "Love & Relationship Scan",
         description = "Palm lines can reveal the level of compatibility between you and that person.",
         imageResId = R.drawable.ic_home_love,
@@ -231,6 +202,6 @@ val palmReadingItems = listOf(
 @Composable
 fun HomeShow() {
     PalmReadingTheme {
-        HomeScreen(modifier = Modifier.fillMaxSize())
+        HomeScreen()
     }
 }
